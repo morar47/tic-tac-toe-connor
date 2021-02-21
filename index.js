@@ -28,9 +28,35 @@ function startGame() {
     cell.classList.remove(CIRCLE_CLASS)
     cell.removeEventListener('click', handleClick)
     cell.addEventListener('click', handleClick, { once: true })
+    document.addEventListener("keydown", keyPushed)
   })
   setBoardHoverClass()
   winningMessageElement.classList.remove('show')
+}
+
+// I should write into the handleKey function a way to take key strokes to move and to placeMark.
+// 
+function keyPushed(e) {
+  switch (e.keyCode) {
+    case 37:
+        handleClick(e);
+        break;
+    case 38:
+        alert('up');
+        break;
+    case 39:
+        alert('right');
+        break;
+    case 40:
+        alert('down');
+        break;
+    case 79:
+        alert('O');
+        break;
+    case 88:
+        alert('X');
+        break;
+  }
 }
 
 function handleClick(e) {
