@@ -5,21 +5,46 @@
     <link rel='stylesheet' href='styles.css'>
   </head>
   <body>
-    <div class="board" id="board">
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-        <div class="cell" data-cell></div>
-      </div>
+    <table class="board" id="board" style="background-color:transparent;">
+      <thead>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th></th>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/>
+        </tr>
+        <tr>
+          <th></th>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+        </tr>
+        <tr>
+          <th></th>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+      <td><input class="cell" data-cell readonly style="background-color:transparent;"/></td>
+        </tr>
+      </tbody>
+    </table>
       <div class="winning-message" id="winningMessage">
         <div data-winning-message-text></div>
         <button id="restartButton">Restart</button>
       </div>   
+    <script	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src='index.js'></script>
+    <script>
+      $(document).ready(function () {
+        $('.board').formNavigation();
+      });
+      </script>
   </body>
 </html>

@@ -17,6 +17,38 @@ const restartButton = document.getElementById('restartButton')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 let circleTurn
 
+// document.onkeydown =  e => { switch(e.key){ 
+//  case 'ArrowUp': handleClick() 
+//  break;
+//  case 'ArrowRight': /* do stuff */ break; 
+//  case 'ArrowDown': /* do stuff */ break; 
+//  case 'ArrowLeft': /* do stuff */ break; } }
+
+//  placeMark() on "cursor"
+
+// // startGame();
+
+// // board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
+
+(function ($) {
+  $.fn.formNavigation = function () {
+      $(this).each(function () {
+          $(this).find('input').on('keydown', function(e) {
+              switch (e.which) {
+                  case 39:
+                      $(this).closest('td').next().find('input').focus(); break;
+                  case 37:
+                      $(this).closest('td').prev().find('input').focus(); break;
+                  case 40:
+                      $(this).closest('tr').next().children().eq($(this).closest('td').index()).find('input').focus(); break;
+                  case 38:
+                      $(this).closest('tr').prev().children().eq($(this).closest('td').index()).find('input').focus(); break;
+              }
+          });
+      });
+  };
+})(jQuery);
+
 startGame();
 
 restartButton.addEventListener('click', startGame)
@@ -28,7 +60,6 @@ function startGame() {
     cell.classList.remove(CIRCLE_CLASS)
     cell.removeEventListener('click', handleClick)
     cell.addEventListener('click', handleClick, { once: true })
-    document.addEventListener("keydown", keyPushed)
   })
   setBoardHoverClass()
   winningMessageElement.classList.remove('show')
@@ -36,28 +67,28 @@ function startGame() {
 
 // I should write into the handleKey function a way to take key strokes to move and to placeMark.
 // 
-function keyPushed(e) {
-  switch (e.keyCode) {
-    case 37:
-        handleClick(e);
-        break;
-    case 38:
-        alert('up');
-        break;
-    case 39:
-        alert('right');
-        break;
-    case 40:
-        alert('down');
-        break;
-    case 79:
-        alert('O');
-        break;
-    case 88:
-        alert('X');
-        break;
-  }
-}
+// function keyPushed(e) {
+//   switch (e.keyCode) {
+//     case 37:
+//         handleClick(e);
+//         break;
+//     case 38:
+//         alert('up');
+//         break;
+//     case 39:
+//         alert('right');
+//         break;
+//     case 40:
+//         alert('down');
+//         break;
+//     case 79:
+//         alert('O');
+//         break;
+//     case 88:
+//         alert('X');
+//         break;
+//   }
+// }
 
 function handleClick(e) {
   const cell = e.target
