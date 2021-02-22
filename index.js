@@ -17,37 +17,45 @@ const restartButton = document.getElementById('restartButton')
 const winningMessageTextElement = document.querySelector('[data-winning-message-text]')
 let circleTurn
 
-// document.onkeydown =  e => { switch(e.key){ 
-//  case 'ArrowUp': handleClick() 
-//  break;
-//  case 'ArrowRight': /* do stuff */ break; 
-//  case 'ArrowDown': /* do stuff */ break; 
-//  case 'ArrowLeft': /* do stuff */ break; } }
+// Set up a counter to keep track of which element is selected
+var current = 0;
 
-//  placeMark() on "cursor"
+// Initialize first element as the selected (focused) one:
+cellElements[current].classList.add("highlight");
 
-// // startGame();
-
-// // board = [" ", " ", " ", " ", " ", " ", " ", " ", " ", " "]
-
-(function ($) {
-  $.fn.formNavigation = function () {
-      $(this).each(function () {
-          $(this).find('input').on('keydown', function(e) {
-              switch (e.which) {
-                  case 39:
-                      $(this).closest('td').next().find('input').focus(); break;
-                  case 37:
-                      $(this).closest('td').prev().find('input').focus(); break;
-                  case 40:
-                      $(this).closest('tr').next().children().eq($(this).closest('td').index()).find('input').focus(); break;
-                  case 38:
-                      $(this).closest('tr').prev().children().eq($(this).closest('td').index()).find('input').focus(); break;
-              }
-          });
-      });
-  };
-})(jQuery);
+// Set up a key event handler for the document
+document.addEventListener("keydown", function(event){
+  // Check for up/down key presses
+  switch(event.keyCode){
+    case 38: // Up arrow    
+      // Remove the highlighting from the previous element
+      cellElements[current].classList.remove("highlight");
+      
+      current = current > 0 ? --current : 0;     // Decrease the counter      
+      cellElements[current].classList.add("highlight"); // Highlight the new element
+      break;
+    case 40: // Down arrow
+      // Remove the highlighting from the previous element
+      cellElements[current].classList.remove("highlight");
+      
+      current = current < cellElements.length-1 ? ++current : cellElements.length-1; // Increase counter 
+      cellElements[current].classList.add("highlight");  // Highlight the new element
+      break;    
+    case 13:
+      const cell = cellElements[current]
+      const currentClass = circleTurn ? CIRCLE_CLASS : X_CLASS
+      placeMark(cell, currentClass)
+      if (checkWin(currentClass)) {
+        endGame(false)
+      } else if (isDraw()) {
+        endGame(true)
+      } else {
+        swapTurns()
+        setBoardHoverClass()
+      }
+      break;
+  }
+});
 
 startGame();
 
@@ -64,31 +72,6 @@ function startGame() {
   setBoardHoverClass()
   winningMessageElement.classList.remove('show')
 }
-
-// I should write into the handleKey function a way to take key strokes to move and to placeMark.
-// 
-// function keyPushed(e) {
-//   switch (e.keyCode) {
-//     case 37:
-//         handleClick(e);
-//         break;
-//     case 38:
-//         alert('up');
-//         break;
-//     case 39:
-//         alert('right');
-//         break;
-//     case 40:
-//         alert('down');
-//         break;
-//     case 79:
-//         alert('O');
-//         break;
-//     case 88:
-//         alert('X');
-//         break;
-//   }
-// }
 
 function handleClick(e) {
   const cell = e.target
